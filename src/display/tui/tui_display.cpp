@@ -81,11 +81,14 @@ void TUIDisplay::setup() {
 void TUIDisplay::setupInputHandling() {
 	uint32_t id;
 	ncinput ni;
+	// Pool for input every 100ms.
+	struct timespec ts = {0, 100 * 1000 * 1000};
 
 	while (running) {
-		id = notcurses_get_blocking(nc, &ni);
+		id = notcurses_get(nc, &ts, &ni);
 
-		if (id == 'q' || id == 'Q') {
+		bool ctrlCPressed = ni.ctrl && (ni.id == 'c' || ni.id == 'C');
+		if (id == 'q' || id == 'Q' || ctrlCPressed) {
 			{
 				std::lock_guard lock(busyMutex);
 				running = false;
