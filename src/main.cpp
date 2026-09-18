@@ -3,7 +3,9 @@
 #include <thread>
 
 int main() {
-	TUIDisplay display = TUIDisplay(32, 32);
+	TUIDisplay display = TUIDisplay(32, 32, true);
 	display.render();
-	std::this_thread::sleep_for(std::chrono::milliseconds(50000));
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+	return 0;
 }

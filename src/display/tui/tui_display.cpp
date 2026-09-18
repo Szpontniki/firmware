@@ -1,7 +1,8 @@
-#include <ncurses.h>
+#include <notcurses/notcurses.h>
+#include <locale.h>
 #include "./tui_display.h"
 
-TUIDisplay::TUIDisplay(int width, int height) {
+TUIDisplay::TUIDisplay(int width, int height, bool terminateOnExit) {
 	// Generate the pixels.
 	for (int x = 0; x < width; x++) {
 		std::vector<TUIPixel> currentRow;
@@ -14,30 +15,35 @@ TUIDisplay::TUIDisplay(int width, int height) {
 	}
 
 	// Setup TUI thread.
+	setlocale(LC_ALL, "");
+
+	notcurses_options opts = {};
+	opts.flags = NCOPTION_SUPPRESS_BANNERS;
+
+	nc = notcurses_init(&opts, stdout);
+	if (!nc) return;
+
 	running = true;
 	needsRedraw = true;
 	thread = std::thread(&TUIDisplay::setup, this);
+	inputThread = std::thread(&TUIDisplay::setupInputHandling, this);
 }
 
 void TUIDisplay::draw() {
+	ncplane *n = notcurses_stdplane(nc);
+
 	for (int x = 0; x < pixels.size(); x++) {
 		std::vector<TUIPixel> currentRow = pixels[x];
 
 		for (int y = 0; y < currentRow.size(); y++) {
 			Color currentPixelColor = currentRow[y].getColor();
-			init_color(
-				1,
-				// Ncurses' colors are specified in range 0-1000, and ours are in 0-255.
-				// We need to adjust for that. This mathematical formula manages to do so.
-				currentPixelColor.red * 1000 / 255,
-				currentPixelColor.green * 1000 / 255,
-				currentPixelColor.blue * 1000 / 255
-			);
-			init_pair(1, 1, 1);
+			uint64_t currentChannels = ncplane_channels(n);
 
-			attron(COLOR_PAIR(1));
-			mvprintw(y, x, ".");
-			attroff(COLOR_PAIR(1));
+			ncplane_set_fg_rgb8(n, currentPixelColor.red, currentPixelColor.green, currentPixelColor.blue);
+			ncplane_set_bg_rgb8(n, currentPixelColor.red, currentPixelColor.green, currentPixelColor.blue);
+			ncplane_printf_yx(n, y, x, ".");
+
+			ncplane_set_channels(n, currentChannels);
 		}
 	}
 }
@@ -52,12 +58,7 @@ void TUIDisplay::render() {
 }
 
 void TUIDisplay::setup() {
-	initscr();
-	curs_set(0);
-	start_color();
-	use_default_colors();
-
-	while (true) {
+	while (running) {
 		std::unique_lock lock(busyMutex);
 
 		cv.wait(lock, [this] {
@@ -71,10 +72,29 @@ void TUIDisplay::setup() {
 
 		draw();
 
-		refresh();
+		notcurses_render(nc);
 	}
 
-	endwin();
+	notcurses_stop(nc);
+}
+
+void TUIDisplay::setupInputHandling() {
+	uint32_t id;
+	ncinput ni;
+
+	while (running) {
+		id = notcurses_get_blocking(nc, &ni);
+
+		if (id == 'q' || id == 'Q') {
+			{
+				std::lock_guard lock(busyMutex);
+				running = false;
+			}
+
+			cv.notify_one();
+			break;
+		}
+	}
 }
 
 TUIDisplay::~TUIDisplay() {
@@ -85,5 +105,6 @@ TUIDisplay::~TUIDisplay() {
 
 	cv.notify_one();
 
+	if (inputThread.joinable()) inputThread.join();
 	if (thread.joinable()) thread.join();
 }

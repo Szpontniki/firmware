@@ -1,5 +1,5 @@
-COMPILERFLAGS := $(shell pkg-config --cflags ncurses)
-LINKERFLAGS := $(shell pkg-config --libs ncurses)
+COMPILERFLAGS := $(shell pkg-config --cflags notcurses)
+LINKERFLAGS := $(shell pkg-config --libs notcurses)
 COMPILER := g++
 PRODUCTIONCOMPILERFLAGS := -O3 -Wall -Wextra -Wpedantic -DNDEBUG $(COMPILERFLAGS)
 SRC := $(shell find . -name '*.cpp')
