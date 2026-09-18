@@ -16,6 +16,7 @@
 					gcc
 					pkg-config
 					gnumake
+					ncurses
 				];
 		};
 	};
