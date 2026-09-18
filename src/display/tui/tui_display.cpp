@@ -20,7 +20,26 @@ TUIDisplay::TUIDisplay(int width, int height) {
 }
 
 void TUIDisplay::draw() {
-	mvprintw(0, 0, "Hello, World!");
+	for (int x = 0; x < pixels.size(); x++) {
+		std::vector<TUIPixel> currentRow = pixels[x];
+
+		for (int y = 0; y < currentRow.size(); y++) {
+			Color currentPixelColor = currentRow[y].getColor();
+			init_color(
+				1,
+				// Ncurses' colors are specified in range 0-1000, and ours are in 0-255.
+				// We need to adjust for that. This mathematical formula manages to do so.
+				currentPixelColor.red * 1000 / 255,
+				currentPixelColor.green * 1000 / 255,
+				currentPixelColor.blue * 1000 / 255
+			);
+			init_pair(1, 1, 1);
+
+			attron(COLOR_PAIR(1));
+			mvprintw(y, x, ".");
+			attroff(COLOR_PAIR(1));
+		}
+	}
 }
 
 void TUIDisplay::render() {
@@ -35,6 +54,8 @@ void TUIDisplay::render() {
 void TUIDisplay::setup() {
 	initscr();
 	curs_set(0);
+	start_color();
+	use_default_colors();
 
 	while (true) {
 		std::unique_lock lock(busyMutex);
