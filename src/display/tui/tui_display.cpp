@@ -2,7 +2,7 @@
 #include <locale.h>
 #include "./tui_display.h"
 
-TUIDisplay::TUIDisplay(int width, int height, bool terminateOnExit) {
+TUIDisplay::TUIDisplay(int width, int height) {
 	// Generate the pixels.
 	for (int x = 0; x < width; x++) {
 		std::vector<TUIPixel> currentRow;
@@ -107,4 +107,9 @@ TUIDisplay::~TUIDisplay() {
 
 	if (inputThread.joinable()) inputThread.join();
 	if (thread.joinable()) thread.join();
+}
+
+void TUIDisplay::colorPixel(int x, int y, Color color) {
+	Display::colorPixel(x, y, color);
+	render();
 }

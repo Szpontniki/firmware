@@ -23,9 +23,9 @@ class TUIDisplay : public Display<TUIPixel> {
 		void setup();
 		void setupInputHandling();
 		void draw();
-	public:
-		TUIDisplay(int width, int height, bool terminateOnExit);
-		~TUIDisplay();
-
 		void render();
+	public:
+		TUIDisplay(int width, int height);
+		~TUIDisplay();
+		void colorPixel(int x, int y, Color color);
 };
