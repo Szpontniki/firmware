@@ -30,7 +30,7 @@ MockAPI::MockAPI(IDisplay *display) : API(display) {
 			.route_dynamic(currentRoute.getPath())
 			.methods(matchHTTPMethodToCrowMethod(currentRoute.getMethod()))
 				([currentRoute, display](const crow::request& req) {
-					Context ctx = Context { *display };
+					Context ctx = Context { *display, req.body };
 
 					int status = currentRoute.run(ctx);
 					return crow::response(status);

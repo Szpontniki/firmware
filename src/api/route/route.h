@@ -15,6 +15,7 @@ enum class HTTPMethod {
 
 struct Context {
 	IDisplay &display;
+	std::string requestBody;
 };
 
 class Route {

@@ -1,8 +1,8 @@
 #include <vector>
 #include "../route.h"
 
-extern Route testRoute;
+extern Route colorPixelsRoute();
 
 std::vector<Route> routes = {
-	testRoute,
+	colorPixelsRoute(),
 };
