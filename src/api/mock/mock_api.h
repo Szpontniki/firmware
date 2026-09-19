@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../api.h"
 #include "../../display/tui/tui_display.h"
 

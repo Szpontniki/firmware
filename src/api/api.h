@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../display/display.h"
 
 template<typename PixelType>
