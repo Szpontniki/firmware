@@ -1,9 +1,5 @@
 #include "./api.h"
-#include "../display/pixel/tui/tui_pixel.h"
 
-template <typename PixelType>
-API<PixelType>::API(Display<PixelType> *display) {
+API::API(IDisplay *display) {
 	controlledDisplay = display;
 }
-
-template class API<TUIPixel>;

@@ -2,11 +2,10 @@
 
 #include "../display/display.h"
 
-template<typename PixelType>
 class API {
 	private:
-		Display<PixelType> *controlledDisplay;
+		IDisplay *controlledDisplay;
 	public:
-		API(Display<PixelType> *display);
+		API(IDisplay *display);
 		virtual void start() = 0;
 };

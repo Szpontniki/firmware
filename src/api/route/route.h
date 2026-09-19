@@ -1,8 +1,10 @@
 #pragma once
 
+#include <variant>
 #include "string"
 #include "functional"
 #include "../../display/display.h"
+#include "../../display/pixel/tui/tui_pixel.h"
 
 enum class HTTPMethod {
 	GET,
@@ -12,7 +14,7 @@ enum class HTTPMethod {
 };
 
 struct Context {
-	Display<Pixel> display;
+	IDisplay &display;
 };
 
 class Route {
@@ -23,5 +25,8 @@ class Route {
 		const std::function<int(Context)> execute;
 	public:
 		Route(HTTPMethod method, std::string path, const std::function<int(Context)> execute);
-		int run(Context ctx);
+		int run(Context ctx) const;
+
+		std::string getPath();
+		HTTPMethod getMethod();
 };

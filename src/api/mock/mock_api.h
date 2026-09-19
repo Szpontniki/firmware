@@ -1,10 +1,13 @@
 #pragma once
 
+#include <crow/app.h>
 #include "../api.h"
 #include "../../display/tui/tui_display.h"
 
-class MockAPI : public API<TUIPixel> {
+class MockAPI : public API {
+	private:
+		crow::SimpleApp app;
 	public:
-		using API::API;
+		MockAPI(IDisplay *display);
 		void start() override;
 };
