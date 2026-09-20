@@ -1,4 +1,4 @@
-COMPILERFLAGS := $(shell pkg-config --cflags notcurses)
+COMPILERFLAGS := $(shell pkg-config --cflags notcurses) -I $(CROW_INCLUDE)
 LINKERFLAGS := $(shell pkg-config --libs notcurses)
 COMPILER := g++
 PRODUCTIONCOMPILERFLAGS := -O3 -Wall -Wextra -Wpedantic -DNDEBUG $(COMPILERFLAGS)

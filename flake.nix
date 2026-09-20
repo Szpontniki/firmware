@@ -13,11 +13,16 @@
 		{
 			devShells.${system}.default = pkgs.mkShell {
 				packages = with pkgs; [
+					# Tooling.
 					gcc
 					pkg-config
 					gnumake
+					# Libraries.
 					notcurses
+					crow
 				];
+
+				CROW_INCLUDE = "${pkgs.crow}/include";
 		};
 	};
 }
