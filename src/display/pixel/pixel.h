@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include <cstdint>
 
@@ -17,5 +18,4 @@ class Pixel {
 		Color getColor();
 };
 
-template <typename T>
-using PixelMatrix = std::vector<std::vector<T>>;
+using PixelMatrix = std::vector<std::vector<std::unique_ptr<Pixel>>>;

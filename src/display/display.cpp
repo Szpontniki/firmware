@@ -10,7 +10,12 @@ void Display<PixelType>::colorPixel(int x, int y, Color color) {
 		exit(EXIT_FAILURE);
 	}
 
-	pixels[x][y].setColor(color);
+	pixels[x][y]->setColor(color);
+}
+
+template <typename PixelType>
+const PixelMatrix& Display<PixelType>::getPixels() const {
+	return pixels;
 }
 
 template class Display<TUIPixel>;
