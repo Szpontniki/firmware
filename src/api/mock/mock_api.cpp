@@ -30,10 +30,16 @@ MockAPI::MockAPI(IDisplay *display) : API(display) {
 			.route_dynamic(currentRoute.getPath())
 			.methods(matchHTTPMethodToCrowMethod(currentRoute.getMethod()))
 				([currentRoute, display](const crow::request& req) {
-					Context ctx = Context { *display, req.body };
+					std::any responseObject;
+					Context ctx = Context { *display, req.body, responseObject };
 
 					int status = currentRoute.run(ctx);
-					return crow::response(status);
+
+					if (!responseObject.has_value()) return crow::response(status);
+
+					auto& json = ctx.response<crow::json::wvalue>();
+
+					return crow::response(status, json);
 				});
 	}
 }

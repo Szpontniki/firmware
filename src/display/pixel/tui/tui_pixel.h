@@ -4,5 +4,5 @@
 
 class TUIPixel : public Pixel {
 	public:
-		TUIPixel(Color initialColor);
+		TUIPixel(int x, int y, Color initialColor);
 };

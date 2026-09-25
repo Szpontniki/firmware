@@ -1,6 +1,7 @@
 #pragma once
 
 #include <variant>
+#include <any>
 #include "string"
 #include "functional"
 #include "../../display/display.h"
@@ -16,6 +17,18 @@ enum class HTTPMethod {
 struct Context {
 	IDisplay &display;
 	std::string requestBody;
+	// This depends on implementation. We can't type it here.
+	std::any &responseObject;
+
+	template<typename T>
+	T& response()
+	{
+		if (!responseObject.has_value()) {
+			responseObject = T{};
+		}
+
+		return std::any_cast<T&>(responseObject);
+	}
 };
 
 class Route {

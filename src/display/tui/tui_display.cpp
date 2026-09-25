@@ -9,7 +9,7 @@ TUIDisplay::TUIDisplay(int width, int height) {
 		std::vector<std::unique_ptr<Pixel>> currentRow;
 
 		for (int y = 0; y < height; y++) {
-			currentRow.push_back(std::make_unique<TUIPixel>(Color{ 255, 255, 255 }));
+			currentRow.push_back(std::make_unique<TUIPixel>(x, y, Color{ 255, 255, 255 }));
 		}
 
 		pixels.push_back(std::move(currentRow));
