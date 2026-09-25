@@ -1,17 +1,18 @@
 #include <notcurses/notcurses.h>
 #include <locale.h>
+#include <memory>
 #include "./tui_display.h"
 
 TUIDisplay::TUIDisplay(int width, int height) {
 	// Generate the pixels.
 	for (int x = 0; x < width; x++) {
-		std::vector<TUIPixel> currentRow;
+		std::vector<std::unique_ptr<Pixel>> currentRow;
 
 		for (int y = 0; y < height; y++) {
-			currentRow.push_back(TUIPixel({ 255, 255, 255 }));
+			currentRow.push_back(std::make_unique<TUIPixel>(x, y, Color{ 255, 255, 255 }));
 		}
 
-		pixels.push_back(currentRow);
+		pixels.push_back(std::move(currentRow));
 	}
 
 	// Setup TUI thread.
@@ -33,10 +34,10 @@ void TUIDisplay::draw() {
 	ncplane *n = notcurses_stdplane(nc);
 
 	for (int x = 0; x < pixels.size(); x++) {
-		std::vector<TUIPixel> currentRow = pixels[x];
+		std::vector<std::unique_ptr<Pixel>> &currentRow = pixels[x];
 
 		for (int y = 0; y < currentRow.size(); y++) {
-			Color currentPixelColor = currentRow[y].getColor();
+			Color currentPixelColor = currentRow[y]->getColor();
 			uint64_t currentChannels = ncplane_channels(n);
 
 			ncplane_set_fg_rgb8(n, currentPixelColor.red, currentPixelColor.green, currentPixelColor.blue);

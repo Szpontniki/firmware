@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include <cstdint>
 
@@ -12,10 +13,13 @@ struct Color {
 class Pixel {
 	private:
 		Color currentColor;
+	protected:
+		int x, y;
 	public:
 		void setColor(Color color);
 		Color getColor();
+		int getX();
+		int getY();
 };
 
-template <typename T>
-using PixelMatrix = std::vector<std::vector<T>>;
+using PixelMatrix = std::vector<std::vector<std::unique_ptr<Pixel>>>;
