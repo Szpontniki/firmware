@@ -1,10 +1,7 @@
-#include "./display/tui/tui_display.h"
-#include "./api/mock/mock_api.h"
-
-int main() {
-	TUIDisplay display = TUIDisplay(32, 32);
-	MockAPI api = MockAPI(&display);
-	api.start();
-
-	return 0;
-}
+#if defined(BUILD_MOCK)
+	#include "entrypoints/mock.cpp"
+#elif defined(BUILD_HARDWARE)
+	#include "entrypoints/hardware.cpp"
+#else
+	#error "No build target defined! Define BUILD_MOCK or BUILD_HARDWARE."
+#endif

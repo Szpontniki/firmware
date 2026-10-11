@@ -5,7 +5,8 @@
 #include "string"
 #include "functional"
 #include "../../display/display.h"
-#include "../../display/pixel/tui/tui_pixel.h"
+// TODO: remove this later?
+// #include "../../display/pixel/tui/tui_pixel.h"
 
 enum class HTTPMethod {
 	GET,

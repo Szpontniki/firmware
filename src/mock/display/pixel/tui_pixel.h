@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../pixel.h"
+#include "../../../core/display/pixel/pixel.h"
 
 class TUIPixel : public Pixel {
 	public:

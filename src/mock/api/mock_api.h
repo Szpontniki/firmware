@@ -1,8 +1,8 @@
 #pragma once
 
 #include <crow/app.h>
-#include "../api.h"
-#include "../../display/tui/tui_display.h"
+#include "../../core/api/api.h"
+#include "../display/tui_display.h"
 
 struct CORSMiddleware {
 	struct context {};

@@ -1,9 +1,10 @@
 #include <cstdint>
 #include "crow/json.h"
-#include "../../route.h"
+#include "../../../../core/api/route/route.h"
 
 Route colorPixelsRoute() {
 	return Route(HTTPMethod::POST, "/display/color-pixels", [](Context ctx) {
+		// TODO: move this logic to `core`??? Theoretically `hardware` will be doing the same exact thing.
 		auto json = crow::json::load(ctx.requestBody);
 	
 		if (!json) { return 400; }

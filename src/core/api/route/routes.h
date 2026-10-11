@@ -1,6 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "../route.h"
+#include "route.h"
 
 extern std::vector<Route> routes;

@@ -4,8 +4,8 @@
 #include <notcurses/notcurses.h>
 #include <thread>
 #include <condition_variable>
-#include "../display.h"
-#include "../pixel/tui/tui_pixel.h"
+#include "../../core/display/display.h"
+#include "./pixel/tui_pixel.h"
 
 class TUIDisplay : public Display<TUIPixel> {
 	private:
