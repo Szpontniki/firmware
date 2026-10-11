@@ -17,6 +17,7 @@
 					gcc
 					pkg-config
 					gnumake
+					platformio
 					# Libraries.
 					notcurses
 					crow
