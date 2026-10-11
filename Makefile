@@ -3,11 +3,11 @@
 # For more information please consult the documentation, starting with `README.md`.
 
 COMPILER := g++
-COMPILERFLAGS := $(shell pkg-config --cflags notcurses) -I $(CROW_INCLUDE) -DBUILD_MOCK
+COMPILERFLAGS := $(shell pkg-config --cflags notcurses) -I $(CROW_INCLUDE)
 LINKERFLAGS := $(shell pkg-config --libs notcurses)
 PRODUCTIONCOMPILERFLAGS := -O3 -Wall -Wextra -Wpedantic -DNDEBUG $(COMPILERFLAGS)
 
-SRC := $(shell find ./src -name '*.cpp' ! -path './src/hardware/*' ! -path './src/entrypoints/*')
+SRC := $(shell find ./src -name '*.cpp' ! -path './src/hardware/**' ! -path './src/entrypoints/hardware.cpp')
 OUT := ./firmware
 
 all: $(OUT)
