@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../../core/display/display.h"
 #include "./pixel/led_pixel.h"
 
