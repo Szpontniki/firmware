@@ -8,9 +8,6 @@ void setup() {
 	LEDDisplay display = LEDDisplay(2, 2);
 
 	LEDStartupAnimation(display);
-
-	display.colorPixel(0, 0, { 0, 0, 255 });
-	display.colorPixel(1, 1, { 255, 0, 0 });
 }
 
 void loop() {
