@@ -2,7 +2,7 @@
 #include "../mock/api/mock_api.h"
 
 int main() {
-	TUIDisplay display = TUIDisplay(32, 32);
+	TUIDisplay display = TUIDisplay(2, 2);
 	MockAPI api = MockAPI(&display);
 	api.start();
 
