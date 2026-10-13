@@ -1,2 +1,6 @@
 .direnv
 firmware
+.pio
+.vscode
+.cache
+compile_commands.json
