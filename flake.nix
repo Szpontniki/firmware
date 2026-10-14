@@ -19,6 +19,7 @@
 					gnumake
 					platformio
 					bear
+					docker
 					# Libraries.
 					notcurses
 					crow
