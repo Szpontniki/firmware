@@ -17,4 +17,4 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v3
 
       - name: Build
-        run: nix develop -c make production
+        run: nix develop .\#build -c make production
