@@ -9,23 +9,35 @@
 		let
 			system = "x86_64-linux"; # Adjust if using a different architecture.
 			pkgs = import nixpkgs { inherit system; };
-		in
-		{
-			devShells.${system}.default = pkgs.mkShell {
+
+			# Parts of the dev shell shared between build and default, development environment.
+			common = {
 				packages = with pkgs; [
-					# Tooling.
 					gcc
-					pkg-config
 					gnumake
-					platformio
-					bear
-					docker
-					# Libraries.
+					pkg-config
 					notcurses
 					crow
 				];
+				environment = {
+					CROW_INCLUDE = "${pkgs.crow}/include";
+				};
+			};
+		in
+		{
+			devShells.${system} = {
+				default = pkgs.mkShell (common.environment // {
+					packages = common.packages ++ (with pkgs; [
+						# Tooling.
+						platformio
+						bear
+						docker
+					]);
+				});
 
-				CROW_INCLUDE = "${pkgs.crow}/include";
+				build = pkgs.mkShell (common.environment // {
+					packages = common.packages;
+				});
+			};
 		};
-	};
 }

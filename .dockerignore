@@ -1,0 +1,14 @@
+.cache
+.direnv
+.git
+.github
+.pio
+.vscode
+.clangd
+.envrc
+.gitignore
+.gitmodules
+core
+LICENSE
+platformio.ini
+README.md
