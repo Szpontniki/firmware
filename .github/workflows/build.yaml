@@ -16,6 +16,6 @@ jobs:
       - checks
     name: ⚙️ Build Docker image
 
-    uses: ./.github/workflows/docker-build.yml
+    uses: ./.github/workflows/docker.yml
     with:
       tags: ghcr.io/szpontniki/firmware:latest

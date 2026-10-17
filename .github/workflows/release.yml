@@ -13,7 +13,7 @@ jobs:
       - checks
     name: ⚙️ Build Docker images
 
-    uses: ./.github/workflows/docker-build.yml
+    uses: ./.github/workflows/docker.yml
     with:
       tags: |
         ghcr.io/szpontniki/firmware:${{ github.event.release.tag_name }}
