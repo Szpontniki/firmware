@@ -9,7 +9,7 @@ on:
 jobs:
   checks:
     name: Checks
-    uses: ./.github/workflows/check.yml
+    uses: ./.github/workflows/checks.yml
 
   containerize:
     needs:
