@@ -1,0 +1,22 @@
+name: "Build"
+on:
+  push:
+    branches:
+      - master
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    name: Checks
+    uses: ./.github/workflows/check.yml
+
+  containerize:
+    needs:
+      - checks
+    name: ⚙️ Build Docker image
+    runs-on: ubuntu-latest
+
+    uses: ./.github/workflows/docker-build.yml
+    with:
+      tags: ghcr.io/szpontniki/firmware:latest
