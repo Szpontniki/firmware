@@ -11,9 +11,9 @@ jobs:
   containerize:
     needs:
       - checks
-    name: ⚙️ Build Docker images
 
-    uses: ./.github/workflows/docker.yml
+    name: Containerize
+    uses: ./.github/workflows/containerize.yml
     with:
       tags: |
         ghcr.io/szpontniki/firmware:${{ github.event.release.tag_name }}
