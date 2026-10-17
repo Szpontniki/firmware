@@ -15,7 +15,6 @@ jobs:
     needs:
       - checks
     name: ⚙️ Build Docker image
-    runs-on: ubuntu-latest
 
     uses: ./.github/workflows/docker-build.yml
     with:
