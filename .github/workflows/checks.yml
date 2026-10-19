@@ -6,6 +6,7 @@ on:
 
 jobs:
   checks:
+    name: 🗿 Run All
     runs-on: ubuntu-latest
 
     steps:

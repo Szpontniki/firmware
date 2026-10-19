@@ -10,6 +10,7 @@ on:
 
 jobs:
   images:
+    name: ⚙️ Build Image(s)
     runs-on: ubuntu-latest
 
     steps:
