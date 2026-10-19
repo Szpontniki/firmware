@@ -5,8 +5,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-check:
-    name: 🗿 Build Check
+  checks:
+    name: 🗿 Checks
     runs-on: ubuntu-latest
 
     steps:
@@ -15,8 +15,5 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v3
-
-      - name: Build
-        run: nix develop .\#build -c make production
+      - name: Run checks
+        uses: ./.github/actions/checks
